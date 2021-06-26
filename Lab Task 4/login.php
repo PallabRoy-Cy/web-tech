@@ -1,15 +1,15 @@
-
 <?php
 session_start();
 $message = '';  
 $error = ''; 
 $uname=$psw="";
 $unameErr=$pswErr="";
-$data = file_get_contents('data.json');
+
+$data = file_get_contents("data.json");
 $arr = json_decode($data, true);
 
-$un = $arr["username"];
-$ps = $arr["password"];
+$un = $arr['username'];
+$ps = $arr['password'];
 
 if (isset($_POST['uname'])) {
 	if ($_POST['uname']==$un && $_POST['psw']==$ps) {
@@ -44,7 +44,7 @@ function test_input($data) {
         <title>LOGIN</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
-<body style="background-color:rgb(100, 68, 214);">
+<body style="background-color:rgb(6, 197, 255);">
 <div class="menu">
       <?php include 'menu.php';?>
       </div>

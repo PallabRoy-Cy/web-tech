@@ -1,15 +1,28 @@
 <?php
-$cpsw=$npsw=$cnfpsw="";
+$cpsw=$npsw=$cnfpsw=$msg="";
 $cpswErr=$npswErr=$cnfpswErr="";
+$data = file_get_contents('data.json');
+$arr = json_decode($data, true);
+
+$ps = $arr["password"];
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($_POST["cpsw"])) {
     $cpswErr = "Current Password is required";
   } else {
     $cpsw = test_input($_POST["cpsw"]);
     
-    if (!preg_match("/^[_a-z0-9-]+([_a-z0-9-]+)*@[a-z0-9-]+([a-z0-9-]+)*([a-z]{2,3})/",$cpsw)) {
-      $cpswErr = "alpha numeric characters, period,dash or underscore only";
-      $cpsw="";
+    if (isset($_POST['cpsw'])) {
+      if ($_POST['cpsw']==$ps) {
+        $_SESSION['cpsw'] = $ps;
+        header("location:chgpass.php");
+        
+      }
+      else{
+        $msg="Invalid PASSWORD";
+        // echo "<script>alert('Password is incorrect!')</script>";
+      }
+    
     }
   }
   if (empty($_POST["npsw"])) {
@@ -17,7 +30,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   } else {
     $npsw = test_input($_POST["npsw"]);
     
-    if (strchr($npsw,$cpsw)) {
+    if (!preg_match("#.*^(?=.{8,20})(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$#",$cpsw)) {
+      $cpswErr = "Password must be at least 8 characters in length and must contain at least one number, one upper case letter, one lower case letter and one special character.";
+      $cpsw="";
+    }if (strchr($npsw,$cpsw)) {
       $npswErr = "New Password should not be same as the Current Password";
       $npsw="";
     }
@@ -30,6 +46,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!strchr($npsw,$cnfpsw)) {
       $cnfpswErr = "New Password must match with the Retyped Password";
       $cnfpsw="";
+    } else{
+      $ps=$_POST["cnfpsw"];
+      $newJsonString = json_encode($arr);
+      file_put_contents('data.json', $newJsonString);
     }
   }
 }
@@ -68,6 +88,12 @@ Confirm Password:<br>
 <input type="password" name="cnfpsw" value="<?php echo $cnfpsw;?>"><span class="error">* <?php echo $cnfpswErr;?></span>
 <br />
 <input type="submit" value="Submit" name="submit"><br />
+<?php  
+  if(isset($msg))  
+   {  
+     echo $msg;
+    }  
+?> 
 </form>
 </div>  
 <br />  

@@ -9,16 +9,16 @@ if(!empty($_POST["remember"])) {
 } else {
 	setcookie("uname","");
 	setcookie("psw","");
-	echo "Cookies Not Set. I will forget you !!!!."<br>";
+	echo "Cookies Not Set. I will forget you !!!!"."<br>";
 }if (isset($_SESSION['uname'])) {
 	echo "<h1> Welcome ".$_SESSION['uname']."</h1>";
 	echo "<a href='product.php'>Product</a><br>";
-	echo "<br><a href='logout.php'>Logout</a><br>";
+	
 
 }
 else{
-	     echo "Invalid Session <br>";
-		// header("location:login.php");
+	    //  <!-- echo "Invalid Session <br>"; -->
+		 header("location:login.php");
 		// echo "<script>location.href='login.php'</script>";
 	}
 
@@ -32,14 +32,14 @@ else{
 </style>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body style="background-color:rgb(100, 68, 214);">  
+<body style="background-color:rgb(6, 197, 255);">  
 
 
 <h1>Account</h1>
 <div class="menu">
 <?php include 'promenu.php';?>
 </div>
-<p>Some more text.</p>
+
 
 </body>
 </html>

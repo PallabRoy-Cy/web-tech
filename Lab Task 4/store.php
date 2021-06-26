@@ -5,9 +5,9 @@
  $unameErr=$pswErr=$cnfpswErr="";
  if(isset($_POST["submit"]))  
  {  
-      if(empty($_POST["name"]))  
+     if(empty($_POST["name"]))  
       {  
-           $error = "<label class='text-danger'>Enter Name</label>";  
+          $error = "<label class='text-danger'>Enter Name</label>";  
       }
       else if(empty($_POST["email"]))  
       {  
@@ -22,14 +22,13 @@
             $unameErr = "alpha numeric characters, period,dash or underscore only";
             $uname="";
             
-          }
-          if(str_word_count($uname)<2)
+          }if(str_word_count($uname)<2)
           {
             $unameErr="Less then two Word";
             $uname="";
             
           }
-        }
+     }
         if (empty($_POST["psw"])) {
           $pswErr = "Password is required";
           
@@ -61,12 +60,12 @@
        
       else  
       {  
-           if(file_exists('data.json'))  
+          if(file_exists('data.json')) 
            {  
                 $current_data = file_get_contents('data.json');  
                 $array_data = json_decode($current_data, true);  
                 $extra = array(  
-                     'name'               =>     $_POST['name'],  
+                     'name'               =>     $_POST['name'],
                      'e-mail'          =>     $_POST["email"],  
                      'username'     =>     $_POST["uname"], 
                      'password'    =>   $_POST["cnfpsw"],
@@ -92,7 +91,7 @@
      $data = htmlspecialchars($data);
      return $data;
    }  
- ?>  
+?>  
  <!DOCTYPE html>  
  <html>  
       <head>  
@@ -101,7 +100,7 @@
            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
       </head>  
-      <body style="background-color:rgb(192, 245, 232);">  
+      <body style="background-color:rgb(6, 197, 255);">  
       <div class="menu">
       <?php include 'menu.php';?>
       </div>

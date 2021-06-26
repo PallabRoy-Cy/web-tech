@@ -1,7 +1,22 @@
 <?php  
- $message = '';  
+ $msg = '';  
  $error = '';  
- 
+ $data = file_get_contents('data.json');
+$arr = json_decode($data, true);
+
+$em = $arr["e-mail"];
+
+if (isset($_POST['email'])) {
+	if ($_POST['email']==$em) {
+		$_SESSION['email'] = $em;
+		header("location:chgpass.php");
+	}
+	else{
+		$msg="Invalid E-mail";
+		// echo "<script>alert('uname or pass incorrect!')</script>";
+	}
+
+}
  if(isset($_POST["submit"]))  
  {  
     if(empty($_POST["email"]))  
@@ -18,12 +33,12 @@
            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
       </head>  
-      <body style="background-color:rgb(192, 245, 232);">
+      <body style="background-color:rgb(6, 197, 255);">
       <br />  
            <div class="container" style="width:500px;">  
                 <h3 align="">FORGOT PASSWORD</h3><br />
 
-<form action="login.php" method="post">
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 <?php   
                      if(isset($error))  
                      {  
@@ -37,9 +52,9 @@
 E-mail: <input type="text" name="email" class="form-control" /><br />
 <button type="submit" value="fpass">Submit</button><br />
 <?php  
-                     if(isset($message))  
+                     if(isset($msg))  
                      {  
-                          echo $message;
+                          echo $msg;
                      }  
                      ?> 
 </form>
