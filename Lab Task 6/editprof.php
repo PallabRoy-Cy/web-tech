@@ -2,7 +2,7 @@
 session_start();
  $message = '';  
  $error = '';  
-//  $username=$email=$name=$dob=$gender="";
+
 $unameErr=$emailErr=$nameErr=$genderErr=$dobErr="";
  
 require_once('controller/profInfo.php');

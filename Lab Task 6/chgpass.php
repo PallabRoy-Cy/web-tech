@@ -57,13 +57,11 @@ if (isset($_POST['changePass'])) {
 
   if (changePass($_POST['id'], $psw)) {
   	echo 'Successfully updated!!';
-    // echo $pass['password'];
-  	// header(id=' . $_POST["id"]);
-    // header('location:chgpass.php');
+   
   }
 }else {
   echo 'Password Not Changed!!';
-  // header('location:chgpass.php');
+  
 }
 }
 

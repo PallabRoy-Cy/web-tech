@@ -43,7 +43,7 @@ if (isset($_POST['updateProfile'])) {
      {
           $genderErr = "Gender is required"; 
      }
-	 
+
      if(empty($_POST["dob"]))  
      {
          $dobErr = "Date of Birth is required";
@@ -60,7 +60,7 @@ if (isset($_POST['updateProfile'])) {
 	
 		if (updateProfile($_POST['id'], $data)) {
 		  echo 'Successfully updated!!';
-	  
+
 		  header('Location: ../viewprof.php?id='.$_POST["id"]);
 	  }
 	} else {

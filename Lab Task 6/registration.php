@@ -9,10 +9,6 @@
 require_once('model/db_connect.php');
  if(isset($_POST["submit"]))
  {  
-  //  $targetDir = "../uploads/";
-  //  $fileName = basename($_FILES['image']['name']);
-  //  $targetFilePath = $targetDir . $fileName;
-  //  $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
 
    if(empty($_POST["name"]))  
       {
@@ -76,10 +72,12 @@ require_once('model/db_connect.php');
       if ($_FILES["image"]["error"] != 0) {
         $imageErr = "file required";
       } else {
-        $targetDir = "../uploads/";
+        $targetDir = "uploads/";
         $fileName = basename($_FILES['image']['name']);
+        $file_tmp =$_FILES['image']['tmp_name'];
         $targetFilePath = $targetDir . $fileName;
         $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+        move_uploaded_file($file_tmp,$targetFilePath);
         }
       if (empty($error) && empty($emailErr) && empty($unameErr) && empty($pswErr) && empty($cnfpswErr) && empty($imageErr)) {
 

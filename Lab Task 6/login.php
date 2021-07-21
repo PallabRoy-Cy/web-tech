@@ -3,18 +3,20 @@ session_start();
 $message = '';
 $error = '';
 $unameErr=$pswErr="";
-// $username="";
+
 
 require_once('model/db_connect.php');
 
 
 if(isset($_POST['submit']))
 {
-	if(isset($_POST['email'],$_POST['password']) && !empty($_POST['email']) && !empty($_POST['password']))
+	if(isset($_POST['email'],$_POST['password']) && !empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST["remember"]))
 	{
 		$email = trim($_POST['email']);
 		$password = trim($_POST['password']);
- 
+		setcookie ("email",$_POST['email'],time()+ 10);
+        setcookie ("password",$_POST['password'],time()+ 10);
+
 		if(filter_var($email, FILTER_VALIDATE_EMAIL))
 		{
      		$conn=db_conn();
@@ -52,9 +54,14 @@ if(isset($_POST['submit']))
 	else
 	{
 		$errors[] = "Email and Password are required";	
+		setcookie("email","");
+        setcookie("password","");
+        echo "Cookies Not Set. I will forget you !!!!";
 	}
- 
+	
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -75,13 +82,11 @@ if(isset($_POST['submit']))
       <?php include 'menu.php';?>
       </div>
 <br />
-<!-- <div class="menu">
-	<?php include 'promenu.php';?>
-</div> -->
+
 <br />
 <div class="container" style="width:500px;">
 <p><span class="error">* required field</span></p>
-<?php 
+<?php
 	if(isset($errors) && count($errors) > 0)
 		{
 			foreach($errors as $error_msg)
@@ -96,10 +101,10 @@ if(isset($_POST['submit']))
 <fieldset>
 <legend>Login</legend>
   <label for="email">Email:</label><br>
-  <input type="text" id="email" name="email" class="form-control"><br />
+  <input type="text" id="email" name="email" value="<?php if(isset($_COOKIE["email"])) { echo $_COOKIE["email"]; } ?>" class="form-control"><br />
   <span class="error">* <?php echo $unameErr;?></span><br>
   <label for="username">Password:</label><br>
-  <input type="password" id="password" name="password" class="form-control"><br />
+  <input type="password" id="password" name="password" value="<?php if(isset($_COOKIE["password"])) { echo $_COOKIE["password"]; } ?>" class="form-control"><br />
   <span class="error">* <?php echo $pswErr;?></span><br>
   <label>
     <input type="checkbox" checked="checked" name="remember"> Remember me<br />
@@ -112,7 +117,8 @@ if(isset($_POST['submit']))
   if(isset($msg))  
    {  
      echo $msg;
-    }  
+    } 
+ 
 ?> 
 </form>
 </div> <br />  

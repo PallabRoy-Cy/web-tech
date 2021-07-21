@@ -9,8 +9,7 @@ function db_conn()
     try {
         $conn = new PDO('mysql:host='.$servername.';dbname='.$dbname.';charset=utf8', $username, $password);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        // $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-        // var_dump($conn) ;
+        
     } catch (PDOException $e) {
         dir('Error: Cannot connect');
 	echo "PDO error".$e->getMessage();

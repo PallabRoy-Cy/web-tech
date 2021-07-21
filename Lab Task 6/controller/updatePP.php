@@ -9,9 +9,10 @@ if (isset($_POST['updatePP']))
 }else{
 	$data['image'] = basename($_FILES["image"]["name"]);
     $target_dir = "../uploads/";
-	$target_file = $target_dir . basename($_FILES["image"]["name"]);
+	  $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $file_tmp =$_FILES['image']['tmp_name'];
     $fileType = pathinfo($target_file,PATHINFO_EXTENSION);
-    
+    move_uploaded_file($file_tmp,$target_file);
     if (updatePP($_POST['id'], $data)){
   	header('Location: ../viewprof.php?id='.$_POST["id"]);
   }

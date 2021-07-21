@@ -11,6 +11,11 @@ $profile = fetchProfile($_SESSION['id']);
 <html>
 <head>
 	<title></title>
+	<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
 </head>
 <body style="background-color:rgb(97, 105, 116);>
 <div class="menu">

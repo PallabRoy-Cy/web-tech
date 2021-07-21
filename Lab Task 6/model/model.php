@@ -17,6 +17,7 @@ function updateProfile($id, $data){
     $conn = null;
     return true;
 }
+
 function updatePP($id, $data){
     $conn = db_conn();
     $selectQuery = "UPDATE member set `image`=? where id = ?";
