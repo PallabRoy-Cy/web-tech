@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $nameErr = "Only letters and white space allowed";
       $name="";
     }if(preg_match("/^[0-9]/", $name)){
-      $nameE="Must start with letter";
+      $nameErr="Must start with letter";
     }
     if(str_word_count($name)<2)
     {
