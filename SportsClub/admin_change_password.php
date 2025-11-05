@@ -5,7 +5,8 @@ $cpsw=$npsw=$cnfpsw="";
 $cpswErr=$npswErr=$cnfpswErr="";
 $error="";
 $message="";
-require_once('controller/profInfo.php');
+require_once 'controller/profInfo.php';
+
 $profile = fetchProfile($_SESSION['id']);
 
 if(!isset($_SESSION['id']))
@@ -88,11 +89,11 @@ function test_input($data) {
             <h3><?php echo ucfirst($_SESSION['name']); ?></h3>
         </div>
         <nav class="dashboard-nav">
-            <?php include 'promenu.php';?>
+            <?php include 'adminmenu.php';?>
         </nav>
     </div>
   <main class="main-content">
-        <h2>CHANGE PASSWORD</h2>
+        <h2>CHANGE ADMIN PASSWORD</h2>
         <?php
         if(!empty($error))
         {

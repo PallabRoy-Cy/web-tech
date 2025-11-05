@@ -1,11 +1,9 @@
-<?php
-    session_start(); 
-    require_once 'controller/profInfo.php';
-    
-    $profile = fetchProfile($_SESSION['id']);
-    if(!$_SESSION['id']){
-        header('location:login.php');
-    }
+<?php  
+session_start();
+require_once 'controller/profInfo.php';
+
+$profile = fetchProfile($_SESSION['id']);
+ 
 ?>
 <?php include 'header.php'; ?>
 <div class="dashboard-container">
@@ -15,17 +13,25 @@
             <h3><?php echo ucfirst($_SESSION['name']); ?></h3>
         </div>
         <nav class="dashboard-nav">
-            <?php include 'promenu.php';?>
+            <?php include 'adminmenu.php';?>
         </nav>
     </div>
     <main class="main-content">
-        <h2>Welcome to your Dashboard</h2>
-        <p>Here you can manage your profile and view your membership details.</p>
-        <div class="card">
-            <h3>Membership Details</h3>
-            <p><strong>Membership Type:</strong> Basic</p>
-            <p><strong>Renewal Date:</strong> 2024-12-31</p>
-        </div>
+        <h2>Admin Profile</h2>
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <td><?php echo $profile['name'] ?></td>
+            </tr>
+            <tr>
+                <th>Username</th>
+                <td><?php echo $profile['username'] ?></td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td><?php echo $profile['email'] ?></td>
+            </tr>
+        </table>
     </main>
 </div>
 <style>

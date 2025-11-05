@@ -3,9 +3,8 @@ session_start();
  $message = '';  
  $error = '';  
 
-$unameErr=$emailErr=$nameErr=$genderErr=$dobErr=""; 
- 
-require_once('controller/profInfo.php');
+$unameErr=$emailErr=$nameErr=""; 
+require_once 'controller/profInfo.php';
 
  $profile = fetchProfile($_SESSION['id']);
 ?>
@@ -17,12 +16,12 @@ require_once('controller/profInfo.php');
             <h3><?php echo ucfirst($_SESSION['name']); ?></h3>
         </div>
         <nav class="dashboard-nav">
-            <?php include (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) ? 'adminmenu.php' : 'promenu.php';?>
+            <?php include 'adminmenu.php';?>
         </nav>
     </div>
     <main class="main-content">
-        <h2>Edit Profile</h2>
-        <form action="controller/updateProf.php" method="POST" enctype="multipart/form-data">
+        <h2>Edit Admin Profile</h2>
+        <form action="controller/updateAdminProf.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Name</label>
                 <input value="<?php echo $profile['name'] ?>" type="text" id="name" name="name" class="form-control">
@@ -35,21 +34,6 @@ require_once('controller/profInfo.php');
                 <label>User Name</label>
                 <input value="<?php echo $profile['username'] ?>" type="text" id="username" name="username" class="form-control">
                 <span class="error">* <?php echo $unameErr;?></span>
-            </div>
-            <fieldset class="form-group">
-                <legend>Gender</legend>
-                <input type="radio" id="male" name="gender" value="male" <?php if($profile['gender'] == 'male') echo 'checked'; ?> >
-                <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="female" <?php if($profile['gender'] == 'female') echo 'checked'; ?> >
-                <label for="female">Female</label>
-                <input type="radio" id="other" name="gender" value="other" <?php if($profile['gender'] == 'other') echo 'checked'; ?> >
-                <label for="other">Other</label><br>
-                <span class="error">* <?php echo $genderErr;?></span>
-            </fieldset>
-            <div class="form-group">
-                <legend>Date of Birth:</legend>
-                <input value="<?php echo $profile['dateofbirth'] ?>" type="date" id="dob" name="dob" class="form-control">
-                <span class="error">* <?php echo $dobErr;?></span>
             </div>
             <input type="hidden" name="id" value="<?php echo $profile['id'] ?>">
             <button type="submit" name="updateProfile" class="btn">Update</button>

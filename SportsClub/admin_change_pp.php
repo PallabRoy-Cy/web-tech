@@ -1,31 +1,33 @@
-<?php
-    session_start(); 
-    require_once 'controller/profInfo.php';
-    
-    $profile = fetchProfile($_SESSION['id']);
-    if(!$_SESSION['id']){
-        header('location:login.php');
-    }
+<?php  
+session_start();
+ $message = '';  
+ $error = '';  
+
+$imageErr="";
+ 
 ?>
 <?php include 'header.php'; ?>
 <div class="dashboard-container">
     <div class="sidebar">
         <div class="profile-info">
-            <img src="uploads/<?php echo $profile['image'] ?>" alt="<?php echo $profile['name'] ?>">
+            <img src="uploads/<?php echo $_SESSION['image'] ?>" alt="<?php echo $_SESSION['name'] ?>">
             <h3><?php echo ucfirst($_SESSION['name']); ?></h3>
         </div>
         <nav class="dashboard-nav">
-            <?php include 'promenu.php';?>
+            <?php include 'adminmenu.php';?>
         </nav>
     </div>
     <main class="main-content">
-        <h2>Welcome to your Dashboard</h2>
-        <p>Here you can manage your profile and view your membership details.</p>
-        <div class="card">
-            <h3>Membership Details</h3>
-            <p><strong>Membership Type:</strong> Basic</p>
-            <p><strong>Renewal Date:</strong> 2024-12-31</p>
-        </div>
+        <h2>Change Admin Profile Picture</h2>
+        <form action="controller/updateAdminPP.php" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image">Select Image</label>
+                <input type="file" name="image" class="form-control" />
+                <span class="error">* <?php echo $imageErr;?></span>
+            </div>
+            <input type="hidden" name="id" value="<?php echo $_SESSION['id'] ?>">
+            <input type="submit" name="updatePP" value="Upload" class="btn">
+        </form>
     </main>
 </div>
 <style>
@@ -63,6 +65,9 @@
 .main-content {
     flex: 1;
     padding: 1rem;
+}
+.error{
+    color: red;
 }
 </style>
 <?php include 'footer.php'; ?>

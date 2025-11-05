@@ -1,7 +1,6 @@
-<<<<<<< HEAD
 <?php
 
-require_once 'db_connect.php';
+require_once __DIR__ . '/../model/db_connect.php';
 
 function updateProfile($id, $data){
     $conn = db_conn();
@@ -11,6 +10,7 @@ function updateProfile($id, $data){
         $stmt->execute([
         	$data['name'], $data['email'], $data['username'], $data['gender'], $data['dateofbirth'], $data['image'], $id
         ]);
+    
     }catch(PDOException $e){
         echo $e->getMessage();
     }
@@ -63,128 +63,54 @@ function showAllProfiles(){
 }
 
 
+function showPass($id){
+	$sql = "SELECT password FROM member WHERE id = :id";
+    $conn = db_conn();
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $data;
+}
+    
 function changePass($id, $psw){
     $conn = db_conn();
-    $selectQuery = "UPDATE member set `password` = ? where id = ?";
+    $sql = "UPDATE member SET password = :password WHERE id = :id";
     try{
-        $stmt = $conn->prepare($selectQuery);
-        $stmt->execute([
-        	$psw['cnfpsw'], $id
-        ]);
-    }catch(PDOException $e){
+      $stmt = $conn->prepare($sql);
+      $stmt->bindParam(':id', $id);
+      $stmt->bindParam(':password', $psw['cnfpsw']);
+      $stmt->execute();
+    } catch(PDOException $e){
         echo $e->getMessage();
     }
-    
     $conn = null;
     return true;
 }
 
-function showPass($id){
-	$conn = db_conn();
-	$selectQuery = "SELECT * FROM `member` where id = ?";
-
-    try {
-        $stmt = $conn->prepare($selectQuery);
-        $stmt->execute([$id]);
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-    }
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    return $row;
-=======
-<?php
-
-require_once 'db_connect.php';
-
-function updateProfile($id, $data){
+function showAdminPass($id){
+	$sql = "SELECT password FROM member WHERE id = :id AND isAdmin = 1";
     $conn = db_conn();
-    $selectQuery = "UPDATE member set `name` = ?, email = ?, username = ?, gender =?, dateofbirth=?, `image`=? where id = ?";
-    try{
-        $stmt = $conn->prepare($selectQuery);
-        $stmt->execute([
-        	$data['name'], $data['email'], $data['username'], $data['gender'], $data['dateofbirth'], $data['image'], $id
-        ]);
-    }catch(PDOException $e){
-        echo $e->getMessage();
-    }
-    
-    $conn = null;
-    return true;
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
+    return $data;
 }
 
-function updatePP($id, $data){
+function changeAdminPass($id, $psw){
     $conn = db_conn();
-    $selectQuery = "UPDATE member set `image`=? where id = ?";
+    $sql = "UPDATE member SET password = :password WHERE id = :id AND isAdmin = 1";
     try{
-        $stmt = $conn->prepare($selectQuery);
-        $stmt->execute([
-        	$data['image'], $id
-        ]);
-    }catch(PDOException $e){
-        echo $e->getMessage();
+      $stmt = $conn->prepare($sql);
+      $stmt->bindParam(':id', $id);
+      $stmt->bindParam(':password', $psw['cnfpsw']);
+      $stmt->execute();
+    } catch(PDOException $e){
+      echo $e->getMessage();
     }
-    
     $conn = null;
     return true;
 }
 
-function showProfile($id){
-	$conn = db_conn();
-	$selectQuery = "SELECT * FROM `member` where id = ?";
-
-    try {
-        $stmt = $conn->prepare($selectQuery);
-        $stmt->execute([$id]);
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-    }
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    return $row;
-}
-
-function showAllProfiles(){
-	$conn = db_conn();
-    $selectQuery = 'SELECT * FROM `member` ';
-    try{
-        $stmt = $conn->query($selectQuery);
-    }catch(PDOException $e){
-        echo $e->getMessage();
-    }
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    return $rows;
-}
-
-
-function changePass($id, $psw){
-    $conn = db_conn();
-    $selectQuery = "UPDATE member set `password` = ? where id = ?";
-    try{
-        $stmt = $conn->prepare($selectQuery);
-        $stmt->execute([
-        	$psw['cnfpsw'], $id
-        ]);
-    }catch(PDOException $e){
-        echo $e->getMessage();
-    }
-    
-    $conn = null;
-    return true;
-}
-
-function showPass($id){
-	$conn = db_conn();
-	$selectQuery = "SELECT * FROM `member` where id = ?";
-
-    try {
-        $stmt = $conn->prepare($selectQuery);
-        $stmt->execute([$id]);
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-    }
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    return $row;
->>>>>>> 93537d5fd1bdedd9072bda08597969ef6c18cbd6
-}
+?>
