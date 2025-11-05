@@ -1,0 +1,15 @@
+[build]
+  # This command is a placeholder. We are not building a static site.
+  command = "echo 'No build command required'"
+  # Directory where Netlify will look for serverless functions.
+  functions = "netlify/functions/"
+  # The publish directory can be your project root.
+  publish = "."
+
+# Redirect all requests to our PHP handler function, except for existing assets.
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/php"
+  status = 200
+  force = true
+  conditions = { "Exists" = "!~" }
