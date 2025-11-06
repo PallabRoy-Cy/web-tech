@@ -1,0 +1,275 @@
+/* General Styles */
+html, body, #root {
+    height: 100%; /* Ensure html, body, and the root div take full height */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
+    /* min-height: 100vh; This property will be moved to .app-layout */
+}
+
+.app-layout { /* New class for the main layout container */
+    display: flex; /* Enable flexbox */
+    flex-direction: column; /* Arrange children vertically */
+    min-height: 100vh; /* Ensure it takes at least the full viewport height */
+}
+.app-main-content { /* New class for the main content area */
+    flex-grow: 1; /* Allow this area to grow and push the footer down */
+}
+.container {
+    max-width: 1100px;
+    margin: auto;
+    overflow: hidden;
+    padding: 0 20px;
+}
+
+/* Header */
+header {
+    background: linear-gradient(90deg, #0f172a, #1e293b);
+    color: #fff;
+    padding: 0.75rem 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+.brand-logo {
+    width: 44px;
+    height: 44px;
+    object-fit: contain;
+}
+.brand-text {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: #fff;
+    letter-spacing: 0.3px;
+}
+
+/* Navigation */
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav ul li {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 16px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+nav a:hover {
+    color: #cbd5e1;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    border-radius: 8px;
+    padding: 10px 16px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .2s ease;
+}
+.btn-primary {
+    background: #0ea5e9;
+    color: #fff;
+    border-color: #0ea5e9;
+}
+.btn-primary:hover { background: #0284c7; border-color: #0284c7; }
+.btn-outline {
+    background: transparent;
+    color: #e2e8f0;
+    border-color: #475569;
+}
+.btn-outline:hover { background: rgba(148,163,184,0.15); color: #fff; }
+
+/* Hero */
+.hero {
+    position: relative;
+    min-height: 60vh;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+}
+.hero::before{
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(2,6,23,0.7), rgba(2,6,23,0.4));
+}
+.hero-content{
+    position: relative;
+    color: #fff;
+    max-width: 800px;
+}
+.hero-content h1{
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+.hero-content p{
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #e2e8f0;
+}
+.actions{ display:flex; gap:12px; flex-wrap: wrap; }
+
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+
+/* Cards */
+.card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Tables */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background: #f4f4f4;
+}
+
+.login-form {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.dashboard-container {
+    display: flex;
+}
+.sidebar {
+    width: 250px;
+    background: #f4f4f4;
+    padding: 1rem;
+}
+.profile-info {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.profile-info img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+}
+.dashboard-nav ul {
+    list-style: none;
+    padding: 0;
+}
+.dashboard-nav ul li a {
+    display: block;
+    padding: 10px 15px;
+    color: #333;
+    text-decoration: none;
+}
+.dashboard-nav ul li a:hover {
+    background: #ddd;
+}
+.main-content {
+    flex: 1;
+    padding: 1rem;
+}
+.error{
+    color: red;
+}
+.alert-danger{
+    color: red;
+}
+.alert-success{
+    color: green;
+}
+
+.features-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header .container {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    nav ul {
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+
+    nav ul li {
+        display: inline-flex;
+        margin: 6px 8px;
+    }
+
+    .features-grid{
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Footer always set bottom of a page*/
+footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 1rem 0;
+    /* Removed margin-top: 2rem; as flex-grow handles spacing */
+}

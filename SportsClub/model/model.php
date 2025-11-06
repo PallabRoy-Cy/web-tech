@@ -4,19 +4,26 @@ require_once __DIR__ . '/../model/db_connect.php';
 
 function updateProfile($id, $data){
     $conn = db_conn();
-    $selectQuery = "UPDATE member set `name` = ?, email = ?, username = ?, gender =?, dateofbirth=?, `image`=? where id = ?";
-    try{
-        $stmt = $conn->prepare($selectQuery);
-        $stmt->execute([
-        	$data['name'], $data['email'], $data['username'], $data['gender'], $data['dateofbirth'], $data['image'], $id
-        ]);
-    
-    }catch(PDOException $e){
-        echo $e->getMessage();
+
+    $fields = ['`name` = ?', 'email = ?', 'username = ?', 'gender = ?', 'dateofbirth = ?'];
+    $params = [$data['name'], $data['email'], $data['username'], $data['gender'], $data['dateofbirth']];
+
+    if (isset($data['image']) && $data['image'] !== null && $data['image'] !== '') {
+        $fields[] = '`image` = ?';
+        $params[] = $data['image'];
     }
-    
-    $conn = null;
-    return true;
+    $params[] = $id;
+
+    $sql = "UPDATE member SET " . implode(', ', $fields) . " WHERE id = ?";
+    try{
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($params);
+        $conn = null;
+        return true;
+    }catch(PDOException $e){
+        $conn = null;
+        return false;
+    }
 }
 
 function updatePP($id, $data){
@@ -28,7 +35,7 @@ function updatePP($id, $data){
         	$data['image'], $id
         ]);
     }catch(PDOException $e){
-        echo $e->getMessage();
+        // log error in production
     }
     
     $conn = null;
@@ -43,11 +50,11 @@ function showProfile($id){
         $stmt = $conn->prepare($selectQuery);
         $stmt->execute([$id]);
     } catch (PDOException $e) {
-        echo $e->getMessage();
+        return null;
     }
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    return $row;
+    return $row ?: null;
 }
 
 function showAllProfiles(){
@@ -56,7 +63,7 @@ function showAllProfiles(){
     try{
         $stmt = $conn->query($selectQuery);
     }catch(PDOException $e){
-        echo $e->getMessage();
+        return [];
     }
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $rows;
@@ -82,7 +89,7 @@ function changePass($id, $psw){
       $stmt->bindParam(':password', $psw['cnfpsw']);
       $stmt->execute();
     } catch(PDOException $e){
-        echo $e->getMessage();
+        // log error in production
     }
     $conn = null;
     return true;
@@ -107,7 +114,7 @@ function changeAdminPass($id, $psw){
       $stmt->bindParam(':password', $psw['cnfpsw']);
       $stmt->execute();
     } catch(PDOException $e){
-      echo $e->getMessage();
+      // log error in production
     }
     $conn = null;
     return true;

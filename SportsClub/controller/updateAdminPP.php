@@ -1,6 +1,8 @@
 <?php
 session_start();
-require '../db_conn.php';
+require_once('../model/db_connect.php');
+
+$conn = db_conn();
 
 if (isset($_POST['updatePP'])) {
     $id = $_POST['id'];
@@ -12,21 +14,19 @@ if (isset($_POST['updatePP'])) {
         $newImageName = uniqid('IMG-', true) . '.' . $imageExtension;
         $imageDestination = '../uploads/' . $newImageName;
 
-        // Move the uploaded image to the destination directory
         if (move_uploaded_file($imageTmpName, $imageDestination)) {
-            // Update the database with the new image name
-            $sql = "UPDATE members SET image = :image WHERE id = :id AND isAdmin = 1";
+            $sql = "UPDATE member SET image = :image WHERE id = :id AND isAdmin = 1";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':image', $newImageName);
             $stmt->bindParam(':id', $id);
 
             try {
                 $stmt->execute();
-                $_SESSION['image'] = $newImageName; // Update session
+                $_SESSION['image'] = $newImageName;
                 header('Location: ../admin_change_pp.php?success=Profile picture updated successfully');
                 exit();
             } catch (PDOException $e) {
-                header('Location: ../admin_change_pp.php?error=Error updating profile picture: ' . $e->getMessage());
+                header('Location: ../admin_change_pp.php?error=Error updating profile picture');
                 exit();
             }
         } else {
@@ -39,6 +39,6 @@ if (isset($_POST['updatePP'])) {
     }
 }
 
-header('Location: ../admin_change_pp.php'); // Redirect if accessed directly
+header('Location: ../admin_change_pp.php');
 exit();
 ?>
